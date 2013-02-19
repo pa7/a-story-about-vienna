@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 />
+<meta name="description" content="description">
+ 
+<title>Tram Experiment</title>
+<style>
+html, body {
+  width:100%;
+  height:100%;
+  margin:0;
+  padding:0;
+}
+section {
+  height:100%;
+  background:black;
+  border-bottom:1px solid white;
+  position:relative;
+}
+#public-transport {
+  background: -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 800, from(#d9d9d9), to(#8a8888) ) no-repeat #8a8888;
+}
+#tram {
+  width:841px;
+  height:276px;
+  background:red;
+  left:-841px;
+  position:absolute;
+  bottom:0;
+  background:url(tram.png);
+}
+
+h2 { color:white; margin:0; padding:0;}
+</style>
+</head>
+<body>
+<section class="scrollblock">
+
+</section>
+<section class="scrollblock" id="public-transport">
+  <h2>Public Transport</h2>
+  <div id="tram">
+  </div>
+</section>
+<section class="scrollblock">
+
+</section>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="jquery.scrollarama.js"></script>
+<script>
+$(document).ready(function() {
+    var scrollorama = $.scrollorama({ blocks:'.scrollblock', enablePin: false });
+    var once = true;
+
+    scrollorama.onBlockChange(function(){
+      var i = scrollorama.blockIndex;
+
+      if(i == 1 && once){
+        once = false;
+        // trigger the tram animation
+        $('#tram').animate({
+          left: -600
+        }, {
+          duration:800,
+          complete: function(){
+            scrollorama.animate('#tram', {
+              property: 'left',
+              // this needs to be optimized based on screen height (dynamically get it with jquery?)
+              delay: ($('.scrollblock')[1]).offsetTop,
+              start: -600,
+              end: $(window).width() + 600,
+              duration:$($('.scrollblock')[1]).height() - 200
+            });
+          }
+        });
+
+        
+
+      }else {
+ 
+      }
+    });
+        
+  });
+</script>
+<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
+</body>
+</html>
