@@ -1,0 +1,54 @@
+body {
+	padding-top: 7.1429em;
+}
+
+body > header {
+	height: 50px;
+}
+
+.site_wrap > .logo_thumb {
+	top: 18px;
+	left: -47px;
+}
+
+.site_wrap > h1 {
+	margin-bottom: 2.5em;
+}
+
+
+/* .wrap */
+
+.site_wrap {
+	width: 88%;
+	max-width: 48rem;
+	min-width: 292px;
+}
+
+
+/* .thumb */
+
+.logo_thumb {
+	width: 240px;
+	padding-top: 52px;
+	-webkit-background-size: 240px 52px;
+	   -moz-background-size: 240px 52px;
+	    -ms-background-size: 240px 52px;
+	     -o-background-size: 240px 52px;
+	        background-size: 240px 52px;
+}
+
+
+/* pre */
+		
+pre {
+	padding: 0.5em 1em 0.5em 1em;
+	
+	color: #003369;
+	background-color: #e8ecf0;
+	border: 1px solid #cccccc;
+	
+	-webkit-border-radius: 0.3571em;
+		 -moz-border-radius: 0.3571em;
+			 -o-border-radius: 0.3571em;
+					border-radius: 0.3571em;
+}

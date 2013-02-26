@@ -1,0 +1,182 @@
+/* layout.css */
+
+html, body {
+  min-height: 100%;
+}
+
+body {
+  /* Top padding makes room for the header bar */
+  padding-top: 120px;
+  /* Set as position parent */
+  position: relative;
+  color: #444444;
+}
+
+body > header {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  /* Must be matched with padding-top on the body */
+  height: 64px;
+}
+
+body > footer {
+  height: 64px;
+  margin-top: 3.3333em;
+  border-top: 1px solid rgb(230,230,230);
+}
+
+a,
+a:hover,
+a:active {
+  color: #517AA4;
+}
+
+/* manage layers */
+
+.site_wrap    { z-index: 1; }
+.site_header  { z-index: 2; }
+#flash        { z-index: 3; }
+
+
+/* .wrap */
+
+.full_wrap {
+  max-width: 1200px;
+  max-width: 75rem;
+  width: 88%;
+}
+
+
+/* header */
+
+.site_header {
+  background-image: url('../images/bg_header.png');
+  background-position: 0 -8px;
+  
+  /*-webkit-box-shadow: inset 0 -8px 32px rgba( 20, 21, 24, 0.1 );
+     -moz-box-shadow: inset 0 -8px 32px rgba( 20, 21, 24, 0.1 );
+          box-shadow: inset 0 -8px 32px rgba( 20, 21, 24, 0.1 );*/
+}
+
+.logo_thumb {
+  position: absolute;
+  top: 16px;
+  left: 0;
+  width: 359px;
+  padding-top: 76px;
+  
+  background-position: 0 0;
+  background-image: url('../images/logo_stephband.png');
+  
+  -webkit-background-size: 359px 76px;
+     -moz-background-size: 359px 76px;
+       -o-background-size: 359px 76px;
+          background-size: 359px 76px;
+}
+
+
+/* footer */
+
+.site_footer {
+  height: auto;
+  color: #cbd0d5;
+  padding-top: 3.2em;
+  padding-bottom: 3.2em;
+
+  background-color: #515356;
+  background-image: url('../images/bg_invert_header.png');
+  background-repeat: repeat-x;
+  background-position: 0 -36px;
+}
+
+.site_footer a:focus,
+.site_footer a:hover {
+  color: #858b95;
+}
+
+.site_footer a {
+  color: #858b95;
+}
+
+.site_footer > .full_wrap {
+  padding-right: 4.8em;
+}
+
+
+/* .col */
+
+.bio_col    { width: 50%; left: 0; }
+.repo_col   { width: 25%; left: 2.4em; }
+.social_col { width: 25%; left: 4.8em; }
+
+
+
+
+
+
+
+
+
+.site_nav_index {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+.site_nav_index > li {
+  margin-right: 5px;
+  top: 0.75em;
+}
+
+.social_index > li {
+  line-height: 2.0667em;
+  border-bottom: 1px solid #cbd0d5;
+}
+
+.social_index > li:last-child {
+  border-bottom: 0;
+}
+
+.social_index > li > a,
+.repo_index > li > a {
+  display: block;
+}
+
+
+
+
+.nav_tab_button:hover {
+  color: rgb(130,162,194);
+}
+
+.nav_tab_button {
+  background-color: white;
+  color: rgb(109,138,170);
+  
+  padding-left:  1em;
+  padding-right: 1em;
+  
+  height: 2.33em;
+  line-height: 2.33;
+  
+  -webkit-border-top-left-radius: 0.33em;
+      -moz-border-radius-topleft: 0.33em;
+          border-top-left-radius: 0.33em;
+  
+  -webkit-border-top-right-radius: 0.33em;
+      -moz-border-radius-topright: 0.33em;
+          border-top-right-radius: 0.33em;
+}
+
+.twitter_button:hover {
+  background-image: url('../images/twitter_hover.png');
+}
+
+.twitter_button {
+  padding-top: 32px;
+  width: 56px;
+  background-image: url('../images/twitter.png');
+  position: relative;
+  left: 2px;
+  top: -3px;
+}
