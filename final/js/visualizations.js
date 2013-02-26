@@ -14,7 +14,7 @@
 	viz["CultureHotspots"] = (function(){
 
 		var init = function(){
-			$("#tester").html("lalalal");
+			
 		};
 
 		return {
