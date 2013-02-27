@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><meta charset="utf-8">
+<style>
+
+svg {
+  font: 10px sans-serif;
+}
+
+.y.axis path {
+  display: none;
+}
+
+.y.axis line {
+  stroke: #fff;
+  stroke-opacity: .2;
+  shape-rendering: crispEdges;
+}
+
+.y.axis .major line {
+  stroke: #000;
+  stroke-opacity: 1;
+}
+
+.title {
+  font: 300 78px Helvetica Neue;
+  fill: #666;
+}
+
+.birthyear,
+.age {
+  text-anchor: middle;
+}
+
+.birthyear {
+  fill: #fff;
+}
+
+rect {
+  fill-opacity: .6;
+  fill: #e377c2;
+}
+
+rect:first-child {
+  fill: #1f77b4;
+}
+
+</style>
+</head><body>
+<script src="test_files/d3.js"></script>
+<script>
+
+var margin = {top: 20, right: 40, bottom: 30, left: 20},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom,
+    barWidth = Math.floor(width / 19) - 1;
+
+var x = d3.scale.linear()
+    .range([barWidth / 2, width - barWidth / 2]);
+
+var y = d3.scale.linear()
+    .range([height, 0]);
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("right")
+    .tickSize(-width)
+    .tickFormat(function(d) { return Math.round(d / 1e6) + "M"; });
+
+// An SVG element with a bottom-right origin.
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+// A sliding container to hold the bars by birthyear.
+var birthyears = svg.append("g")
+    .attr("class", "birthyears");
+
+// A label for the current year.
+var title = svg.append("text")
+    .attr("class", "title")
+    .attr("dy", ".71em")
+    .text(2000);
+
+d3.csv("population.csv", function(error, data) {
+
+  // Convert strings to numbers.
+  data.forEach(function(d) {
+    d.people = +d.people;
+    d.year = +d.year;
+    d.age = +d.age;
+  });
+
+  // Compute the extent of the data set in age and years.
+  var age1 = d3.max(data, function(d) { return d.age; }),
+      year0 = d3.min(data, function(d) { return d.year; }),
+      year1 = d3.max(data, function(d) { return d.year; }),
+      year = year1;
+
+  // Update the scale domains.
+  x.domain([year1 - age1, year1]);
+  y.domain([0, d3.max(data, function(d) { return d.people; })]);
+
+  // Produce a map from year and birthyear to [male, female].
+  data = d3.nest()
+      .key(function(d) { return d.year; })
+      .key(function(d) { return d.year - d.age; })
+      .rollup(function(v) { return v.map(function(d) { return d.people; }); })
+      .map(data);
+
+  // Add an axis to show the population values.
+  svg.append("g")
+      .attr("class", "y axis")
+      .attr("transform", "translate(" + width + ",0)")
+      .call(yAxis)
+    .selectAll("g")
+    .filter(function(value) { return !value; })
+      .classed("major", true);
+
+  // Add labeled rects for each birthyear (so that no enter or exit is required).
+  var birthyear = birthyears.selectAll(".birthyear")
+      .data(d3.range(year0 - age1, year1 + 1, 5))
+    .enter().append("g")
+      .attr("class", "birthyear")
+      .attr("transform", function(birthyear) { return "translate(" + x(birthyear) + ",0)"; });
+
+  birthyear.selectAll("rect")
+      .data(function(birthyear) { return data[year][birthyear] || [0, 0]; })
+    .enter().append("rect")
+      .attr("x", -barWidth / 2)
+      .attr("width", barWidth)
+      .attr("y", y)
+      .attr("height", function(value) { return height - y(value); });
+
+  // Add labels to show birthyear.
+  birthyear.append("text")
+      .attr("y", height - 4)
+      .text(function(birthyear) { return birthyear; });
+
+  // Add labels to show age (separate; not animated).
+  svg.selectAll(".age")
+      .data(d3.range(0, age1 + 1, 5))
+    .enter().append("text")
+      .attr("class", "age")
+      .attr("x", function(age) { return x(year - age); })
+      .attr("y", height + 4)
+      .attr("dy", ".71em")
+      .text(function(age) { return age; });
+
+  // Allow the arrow keys to change the displayed year.
+  window.focus();
+  d3.select(window).on("keydown", function() {
+    switch (d3.event.keyCode) {
+      case 37: year = Math.max(year0, year - 10); break;
+      case 39: year = Math.min(year1, year + 10); break;
+    }
+    update();
+  });
+
+  function update() {
+    if (!(year in data)) return;
+    title.text(year);
+
+    birthyears.transition()
+        .duration(750)
+        .attr("transform", "translate(" + (x(year1) - x(year)) + ",0)");
+
+    birthyear.selectAll("rect")
+        .data(function(birthyear) { return data[year][birthyear] || [0, 0]; })
+      .transition()
+        .duration(750)
+        .attr("y", y)
+        .attr("height", function(value) { return height - y(value); });
+  }
+});
+
+</script><svg height="500" width="960"><g transform="translate(20,20)"><g transform="translate(0,0)" class="birthyears"><g transform="translate(-1400.3333333333335,0)" class="birthyear"><rect height="0" y="450" width="46" x="-23"></rect><rect height="0" y="450" width="46" x="-23"></rect><text y="446">1760</text></g><g transform="translate(-1352.888888888889,0)" class="birthyear"><rect height="0" y="450" width="46" x="-23"></rect><rect height="0" y="450" width="46" x="-23"></rect><text y="446">1765</text></g><g transform="translate(-1305.4444444444446,0)" class="birthyear"><rect height="0" y="450" width="46" x="-23"></rect><rect height="0" y="450" width="46" x="-23"></rect><text y="446">1770</text></g><g transform="translate(-1258,0)" class="birthyear"><rect height="0" y="450" width="46" x="-23"></rect><rect height="0" y="450" width="46" x="-23"></rect><text y="446">1775</text></g><g transform="translate(-1210.5555555555554,0)" class="birthyear"><rect height="0" y="450" width="46" x="-23"></rect><rect height="0" y="450" width="46" x="-23"></rect><text y="446">1780</text></g><g transform="translate(-1163.111111111111,0)" class="birthyear"><rect height="0" y="450" width="46" x="-23"></rect><rect height="0" y="450" width="46" x="-23"></rect><text y="446">1785</text></g><g transform="translate(-1115.6666666666667,0)" class="birthyear"><rect height="0" y="450" width="46" x="-23"></rect><rect height="0" y="450" width="46" x="-23"></rect><text y="446">1790</text></g><g transform="translate(-1068.2222222222224,0)" class="birthyear"><rect height="0" y="450" width="46" x="-23"></rect><rect height="0" y="450" width="46" x="-23"></rect><text y="446">1795</text></g><g transform="translate(-1020.7777777777778,0)" class="birthyear"><rect height="0" y="450" width="46" x="-23"></rect><rect height="0" y="450" width="46" x="-23"></rect><text y="446">1800</text></g><g transform="translate(-973.3333333333334,0)" class="birthyear"><rect height="0" y="450" width="46" x="-23"></rect><rect height="0" y="450" width="46" x="-23"></rect><text y="446">1805</text></g><g transform="translate(-925.8888888888889,0)" class="birthyear"><rect height="0" y="450" width="46" x="-23"></rect><rect height="0" y="450" width="46" x="-23"></rect><text y="446">1810</text></g><g transform="translate(-878.4444444444445,0)" class="birthyear"><rect height="0" y="450" width="46" x="-23"></rect><rect height="0" y="450" width="46" x="-23"></rect><text y="446">1815</text></g><g transform="translate(-831,0)" class="birthyear"><rect height="0" y="450" width="46" x="-23"></rect><rect height="0" y="450" width="46" x="-23"></rect><text y="446">1820</text></g><g transform="translate(-783.5555555555557,0)" class="birthyear"><rect height="0" y="450" width="46" x="-23"></rect><rect height="0" y="450" width="46" x="-23"></rect><text y="446">1825</text></g><g transform="translate(-736.1111111111112,0)" class="birthyear"><rect height="0" y="450" width="46" x="-23"></rect><rect height="0" y="450" width="46" x="-23"></rect><text y="446">1830</text></g><g transform="translate(-688.6666666666667,0)" class="birthyear"><rect height="0" y="450" width="46" x="-23"></rect><rect height="0" y="450" width="46" x="-23"></rect><text y="446">1835</text></g><g transform="translate(-641.2222222222223,0)" class="birthyear"><rect height="0" y="450" width="46" x="-23"></rect><rect height="0" y="450" width="46" x="-23"></rect><text y="446">1840</text></g><g transform="translate(-593.7777777777777,0)" class="birthyear"><rect height="0" y="450" width="46" x="-23"></rect><rect height="0" y="450" width="46" x="-23"></rect><text y="446">1845</text></g><g transform="translate(-546.3333333333334,0)" class="birthyear"><rect height="0" y="450" width="46" x="-23"></rect><rect height="0" y="450" width="46" x="-23"></rect><text y="446">1850</text></g><g transform="translate(-498.8888888888889,0)" class="birthyear"><rect height="0" y="450" width="46" x="-23"></rect><rect height="0" y="450" width="46" x="-23"></rect><text y="446">1855</text></g><g transform="translate(-451.44444444444446,0)" class="birthyear"><rect height="0" y="450" width="46" x="-23"></rect><rect height="0" y="450" width="46" x="-23"></rect><text y="446">1860</text></g><g transform="translate(-404,0)" class="birthyear"><rect height="0" y="450" width="46" x="-23"></rect><rect height="0" y="450" width="46" x="-23"></rect><text y="446">1865</text></g><g transform="translate(-356.5555555555556,0)" class="birthyear"><rect height="0" y="450" width="46" x="-23"></rect><rect height="0" y="450" width="46" x="-23"></rect><text y="446">1870</text></g><g transform="translate(-309.11111111111114,0)" class="birthyear"><rect height="0" y="450" width="46" x="-23"></rect><rect height="0" y="450" width="46" x="-23"></rect><text y="446">1875</text></g><g transform="translate(-261.6666666666667,0)" class="birthyear"><rect height="0" y="450" width="46" x="-23"></rect><rect height="0" y="450" width="46" x="-23"></rect><text y="446">1880</text></g><g transform="translate(-214.22222222222223,0)" class="birthyear"><rect height="0" y="450" width="46" x="-23"></rect><rect height="0" y="450" width="46" x="-23"></rect><text y="446">1885</text></g><g transform="translate(-166.7777777777778,0)" class="birthyear"><rect height="0" y="450" width="46" x="-23"></rect><rect height="0" y="450" width="46" x="-23"></rect><text y="446">1890</text></g><g transform="translate(-119.33333333333334,0)" class="birthyear"><rect height="0" y="450" width="46" x="-23"></rect><rect height="0" y="450" width="46" x="-23"></rect><text y="446">1895</text></g><g transform="translate(-71.8888888888889,0)" class="birthyear"><rect height="0" y="450" width="46" x="-23"></rect><rect height="0" y="450" width="46" x="-23"></rect><text y="446">1900</text></g><g transform="translate(-24.44444444444445,0)" class="birthyear"><rect height="0" y="450" width="46" x="-23"></rect><rect height="0" y="450" width="46" x="-23"></rect><text y="446">1905</text></g><g transform="translate(23,0)" class="birthyear"><rect height="13.006268581368943" y="436.99373141863106" width="46" x="-23"></rect><rect height="41.17187896813988" y="408.8281210318601" width="46" x="-23"></rect><text y="446">1910</text></g><g transform="translate(70.44444444444446,0)" class="birthyear"><rect height="37.527835796324894" y="412.4721642036751" width="46" x="-23"></rect><rect height="76.61973588576552" y="373.3802641142345" width="46" x="-23"></rect><text y="446">1915</text></g><g transform="translate(117.8888888888889,0)" class="birthyear"><rect height="73.58311059109991" y="376.4168894089001" width="46" x="-23"></rect><rect height="124.6045106043523" y="325.3954893956477" width="46" x="-23"></rect><text y="446">1920</text></g><g transform="translate(165.33333333333334,0)" class="birthyear"><rect height="112.64476741173053" y="337.3552325882695" width="46" x="-23"></rect><rect height="168.45129454339752" y="281.5487054566025" width="46" x="-23"></rect><text y="446">1925</text></g><g transform="translate(212.7777777777778,0)" class="birthyear"><rect height="146.65838951628564" y="303.34161048371436" width="46" x="-23"></rect><rect height="200.52041369079004" y="249.47958630920996" width="46" x="-23"></rect><text y="446">1930</text></g><g transform="translate(260.22222222222223,0)" class="birthyear"><rect height="172.2405595494604" y="277.7594404505396" width="46" x="-23"></rect><rect height="185.82145023822056" y="264.17854976177944" width="46" x="-23"></rect><text y="446">1935</text></g><g transform="translate(307.6666666666667,0)" class="birthyear"><rect height="198.14364856548156" y="251.85635143451844" width="46" x="-23"></rect><rect height="219.24285344854482" y="230.75714655145518" width="46" x="-23"></rect><text y="446">1940</text></g><g transform="translate(355.11111111111114,0)" class="birthyear"><rect height="249.80019589800207" y="200.19980410199793" width="46" x="-23"></rect><rect height="267.6748959469121" y="182.3251040530879" width="46" x="-23"></rect><text y="446">1945</text></g><g transform="translate(402.5555555555556,0)" class="birthyear"><rect height="329.0380242714479" y="120.96197572855209" width="46" x="-23"></rect><rect height="344.6314459350649" y="105.3685540649351" width="46" x="-23"></rect><text y="446">1950</text></g><g transform="translate(450,0)" class="birthyear"><rect height="383.84223068987916" y="66.15776931012084" width="46" x="-23"></rect><rect height="396.84633351286783" y="53.15366648713217" width="46" x="-23"></rect><text y="446">1955</text></g><g transform="translate(497.44444444444446,0)" class="birthyear"><rect height="437.8023327796039" y="12.197667220396113" width="46" x="-23"></rect><rect height="444.3122157280983" y="5.687784271901705" width="46" x="-23"></rect><text y="446">1960</text></g><g transform="translate(544.8888888888889,0)" class="birthyear"><rect height="443.7941353841346" y="6.20586461586538" width="46" x="-23"></rect><rect height="450" y="0" width="46" x="-23"></rect><text y="446">1965</text></g><g transform="translate(592.3333333333334,0)" class="birthyear"><rect height="394.70478521735834" y="55.295214782641665" width="46" x="-23"></rect><rect height="391.3562520416785" y="58.64374795832151" width="46" x="-23"></rect><text y="446">1970</text></g><g transform="translate(639.7777777777777,0)" class="birthyear"><rect height="373.57371274669987" y="76.42628725330013" width="46" x="-23"></rect><rect height="368.12118397885394" y="81.87881602114606" width="46" x="-23"></rect><text y="446">1975</text></g><g transform="translate(687.2222222222223,0)" class="birthyear"><rect height="376.35137521789716" y="73.64862478210284" width="46" x="-23"></rect><rect height="360.60820683198796" y="89.39179316801204" width="46" x="-23"></rect><text y="446">1980</text></g><g transform="translate(734.6666666666667,0)" class="birthyear"><rect height="395.92457127652636" y="54.075428723473635" width="46" x="-23"></rect><rect height="374.8567698899769" y="75.14323011002313" width="46" x="-23"></rect><text y="446">1985</text></g><g transform="translate(782.1111111111112,0)" class="birthyear"><rect height="408.5251855784212" y="41.4748144215788" width="46" x="-23"></rect><rect height="387.6136668635616" y="62.386333136438395" width="46" x="-23"></rect><text y="446">1990</text></g><g transform="translate(829.5555555555557,0)" class="birthyear"><rect height="408.09640409338647" y="41.90359590661353" width="46" x="-23"></rect><rect height="389.43290390298023" y="60.56709609701977" width="46" x="-23"></rect><text y="446">1995</text></g><g transform="translate(877,0)" class="birthyear"><rect height="376.50858607175" y="73.49141392824998" width="46" x="-23"></rect><rect height="360.08494413761434" y="89.91505586238566" width="46" x="-23"></rect><text y="446">2000</text></g></g><text dy=".71em" class="title">2000</text><g transform="translate(900,0)" class="y axis"><g transform="translate(0,450)" style="opacity: 1;" class="tick major"><line y2="0" x2="-900"></line><text style="text-anchor: start;" dy=".32em" y="0" x="3">0M</text></g><g transform="translate(0,411.32574320963846)" style="opacity: 1;" class="tick major"><line y2="0" x2="-900"></line><text style="text-anchor: start;" dy=".32em" y="0" x="3">1M</text></g><g transform="translate(0,372.6514864192769)" style="opacity: 1;" class="tick major"><line y2="0" x2="-900"></line><text style="text-anchor: start;" dy=".32em" y="0" x="3">2M</text></g><g transform="translate(0,333.9772296289153)" style="opacity: 1;" class="tick major"><line y2="0" x2="-900"></line><text style="text-anchor: start;" dy=".32em" y="0" x="3">3M</text></g><g transform="translate(0,295.3029728385538)" style="opacity: 1;" class="tick major"><line y2="0" x2="-900"></line><text style="text-anchor: start;" dy=".32em" y="0" x="3">4M</text></g><g transform="translate(0,256.62871604819225)" style="opacity: 1;" class="tick major"><line y2="0" x2="-900"></line><text style="text-anchor: start;" dy=".32em" y="0" x="3">5M</text></g><g transform="translate(0,217.9544592578307)" style="opacity: 1;" class="tick major"><line y2="0" x2="-900"></line><text style="text-anchor: start;" dy=".32em" y="0" x="3">6M</text></g><g transform="translate(0,179.28020246746917)" style="opacity: 1;" class="tick major"><line y2="0" x2="-900"></line><text style="text-anchor: start;" dy=".32em" y="0" x="3">7M</text></g><g transform="translate(0,140.60594567710757)" style="opacity: 1;" class="tick major"><line y2="0" x2="-900"></line><text style="text-anchor: start;" dy=".32em" y="0" x="3">8M</text></g><g transform="translate(0,101.93168888674603)" style="opacity: 1;" class="tick major"><line y2="0" x2="-900"></line><text style="text-anchor: start;" dy=".32em" y="0" x="3">9M</text></g><g transform="translate(0,63.25743209638449)" style="opacity: 1;" class="tick major"><line y2="0" x2="-900"></line><text style="text-anchor: start;" dy=".32em" y="0" x="3">10M</text></g><g transform="translate(0,24.58317530602295)" style="opacity: 1;" class="tick major"><line y2="0" x2="-900"></line><text style="text-anchor: start;" dy=".32em" y="0" x="3">11M</text></g><path d="M-900,0H0V450H-900" class="domain"></path></g><text dy=".71em" y="454" x="877" class="age">0</text><text dy=".71em" y="454" x="829.5555555555557" class="age">5</text><text dy=".71em" y="454" x="782.1111111111112" class="age">10</text><text dy=".71em" y="454" x="734.6666666666667" class="age">15</text><text dy=".71em" y="454" x="687.2222222222223" class="age">20</text><text dy=".71em" y="454" x="639.7777777777777" class="age">25</text><text dy=".71em" y="454" x="592.3333333333334" class="age">30</text><text dy=".71em" y="454" x="544.8888888888889" class="age">35</text><text dy=".71em" y="454" x="497.44444444444446" class="age">40</text><text dy=".71em" y="454" x="450" class="age">45</text><text dy=".71em" y="454" x="402.5555555555556" class="age">50</text><text dy=".71em" y="454" x="355.11111111111114" class="age">55</text><text dy=".71em" y="454" x="307.6666666666667" class="age">60</text><text dy=".71em" y="454" x="260.22222222222223" class="age">65</text><text dy=".71em" y="454" x="212.7777777777778" class="age">70</text><text dy=".71em" y="454" x="165.33333333333334" class="age">75</text><text dy=".71em" y="454" x="117.8888888888889" class="age">80</text><text dy=".71em" y="454" x="70.44444444444446" class="age">85</text><text dy=".71em" y="454" x="23" class="age">90</text></g></svg>
+</body></html>
