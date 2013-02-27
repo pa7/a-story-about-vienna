@@ -14,6 +14,10 @@
         <link rel="stylesheet" href="css/main.css">
 
         <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.css" />
+<!--[if lte IE 8]>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.ie.css" />
+<![endif]-->
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -21,21 +25,28 @@
         <![endif]-->
 
             <section id="intro">
-                
+
                 <div class="wrapper">
                     <h1>Vienna, Austria</h1>
                 </div>
 
             </section>
-            <section id="districts">
-                Test2
-            </section>
             <section id="cultural">
+                <div id="cultureMap">
 
+                </div>
+                <div id="cultureOverlay">
+
+                </div>
             </section>
             <section id="public-transport">
 
             </section>
+            <section id="districts">
+                
+
+
+            </section>            
             <section id="economy">
 
             </section>
@@ -49,5 +60,7 @@
         <script src="js/vendor/jquery.scrollarama.js"></script>
         <script src="js/visualizations.js"></script>
         <script src="js/main.js"></script>
+        <script src="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.js"></script>
+
     </body>
 </html>
