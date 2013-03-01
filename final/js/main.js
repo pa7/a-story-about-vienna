@@ -11,10 +11,10 @@ $(document).ready(function(){
 
 	var block = {
 		"0": function(){
-				console.log("hello world block1");
+			
 		},
 		"1": function(){
-			console.log("hello world block2");	
+			
 		}
 	};
 
