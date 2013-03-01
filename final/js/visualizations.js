@@ -31,7 +31,6 @@ map = new OpenLayers.Map({
         restrictedExtent: [1799448.394855, 6124949.747770, 1848250.442089, 6162571.828177],
         maxResolution: 38.21851413574219,
         numZoomLevels: 8,
-        tileManager: new OpenLayers.TileManager(),
         controls: [
             new OpenLayers.Control.Navigation({
                 dragPanOptions: {
@@ -39,9 +38,7 @@ map = new OpenLayers.Map({
                 },
                 zoomBoxEnabled: false
             }),
-            new OpenLayers.Control.Attribution(),
-            zoomPanel,
-            layerPanel
+            new OpenLayers.Control.Attribution()
         ],
         eventListeners: {
             moveend: function() {
@@ -60,6 +57,7 @@ function zoomToInitialExtent() {
         map.setCenter(new OpenLayers.LonLat(params.x, params.y), params.z);
     	console.log('joo');
     }
+    /*
 var extent = new OpenLayers.Bounds(1799448.394855, 6124949.74777, 1848250.442089, 6162571.828177);
     defaults.tileFullExtent = extent;
 
@@ -103,8 +101,35 @@ fmzk = new OpenLayers.Layer.WMTS(OpenLayers.Util.applyDefaults({
         isBaseLayer: false
     },
     defaults));
-    map.addLayers([fmzk, aerial, labels]);
-    zoomToInitialExtent();
+    map.addLayers([fmzk, aerial, labels]); */
+
+
+    //OpenLayers.ProxyHost = "proxy.cgi?url=";    
+    OpenLayers.Request.GET({
+        url: "http://maps.wien.gv.at/wmts/1.0.0/WMTSCapabilities.xml",
+        success: function(request) {
+            var format = new OpenLayers.Format.WMTSCapabilities();
+            var defaults = {
+                requestEncoding: "REST",
+                matrixSet: "google3857",
+                attribution: 'Datenquelle: Stadt Wien - <a href="http://data.wien.gv.at">data.wien.gv.at</a>'
+            };
+            var doc = request.responseText,
+                caps = format.read(doc);
+            fmzk = format.createLayer(caps, OpenLayers.Util.applyDefaults(
+                {layer:"fmzk", requestEncoding:"REST", transitionEffect:"resize"}, defaults
+            ));
+            aerial = format.createLayer(caps, OpenLayers.Util.applyDefaults(
+                {layer:"lb", requestEncoding:"REST", transitionEffect:"resize"}, defaults
+            ));
+            labels = format.createLayer(caps, OpenLayers.Util.applyDefaults(
+                {layer:"beschriftung", requestEncoding:"REST", isBaseLayer: false},
+                defaults
+            ));
+            map.addLayers([fmzk, aerial, labels]);
+            zoomToInitialExtent();
+        }
+    });
 
 map.addControl(new OpenLayers.Control.LayerSwitcher());
 

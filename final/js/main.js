@@ -27,6 +27,9 @@ $(document).ready(function(){
 
 	});
 
+	$('#btn_slide1').click(function(){
+		$(window).scrollTo($('#cultural'), 500);
+	});
 
 	// initialize all the visualizations
 	for(var key in viz){
