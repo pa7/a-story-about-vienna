@@ -14,8 +14,43 @@
 	viz["CultureHotspots"] = (function(){
 
 		var	map = null,
+			dataUrls = {
+				"d0": "data/grillspots.json",
+				"d1": "data/citybike.json",
+				"d2": "data/markets.json",
+				"d3": "data/universities.json",
+				"d4": "data/badestellen.json",
+				"d5": "data/museum.json",
+				"d6": "data/camping.json",
+				"d7": "data/castles.json"
+			},
+			dataIcons = {
+				"d0": "img/icons/grillplatzogd.png",
+				"d1": "img/icons/citybike.png",
+				"d2": "img/icons/market.png",
+				"d3": "img/icons/university.png",
+				"d4": "img/icons/badestelle.png",
+				"d5": "img/icons/museum.png",
+				"d6": "img/icons/camping.png",
+				"d7": "img/icons/castle.png" 
+			},
+			data = {
+				"d0": null,
+				"d1": null,
+				"d2": null,
+				"d3": null,
+				"d4": null,
+				"d5": null,
+				"d6": null,
+				"d7": null
+			},
+			normalProjection = null,
+			baseProjection = null,
+			markerLayer = null,
 			init = function(){
-
+				$('#tags_slide2 div').click(function() {
+					updateLayer("d"+$(this).index());
+				});
 				// Defaults for the WMTS layers
 			    var defaults = {
 			        zoomOffset: 12,
@@ -34,6 +69,8 @@
 			            new OpenLayers.Control.Attribution()
 			        ]
 				});
+				baseProjection = new OpenLayers.Projection("EPSG:3857");
+				normalProjection = new OpenLayers.Projection("EPSG:4326");
 				function zoomToInitialExtent() {
 			        map.setCenter(new OpenLayers.LonLat(1819237.393019, 6142104.9771083), 12);
 			    };
@@ -62,7 +99,48 @@
 			            zoomToInitialExtent();
 			        }
 			    });
+				markerLayer = new OpenLayers.Layer.Markers();
+				map.addLayer(markerLayer);
 
+			},
+			updateLayer = function(dataId){
+				//TODO:
+				//	-	Optimize animations
+				//
+				markerLayer.clearMarkers();
+
+				// load data if doesn't exist + create lonlat objects
+				if(!data[dataId]){
+					$.getJSON(dataUrls[dataId], function(response) {
+						var res = [];
+						
+						$.each(response.features, function(key, value) {
+							var lonlat = value.geometry.coordinates;
+							// we need to add the datapoints transformed into the same projection as the base layer projection
+							res.push(new OpenLayers.LonLat( lonlat[0], lonlat[1]).transform(normalProjection, baseProjection));
+						});
+
+
+						data[dataId] = res;
+						updateLayer(dataId);
+					});
+				}
+				var timeMs = 2000 / $(data[dataId]).size();
+
+				var size = new OpenLayers.Size(16,16);
+				var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
+				var icon = new OpenLayers.Icon(dataIcons[dataId], size, offset);
+				
+
+
+				// animate markers on layer
+				$(data[dataId]).each(function(index){
+					
+					setTimeout(function(){
+						markerLayer.addMarker(new OpenLayers.Marker(data[dataId][index],icon.clone()));
+					}, timeMs*index);
+
+				});
 			};
 
 		return {

@@ -34,21 +34,24 @@
 
             </section>
             <section id="cultural">
-                <div id="cultureMap">
-
-                </div>
                 <div id="cultureOverlay">
                     <h2>There are lots of things to do in Vienna</h2>
                     <div id="spacer_slide2">such as...</div>
                     <div id="tags_slide2">
-                        <div>public grilling</div>
-                        <div>riding a bycicle</div>
-                        <div>partying hard</div>
-                        <div>sightseeing</div>
-                        <div>swimming</div>
-                        <div>going to museums</div>
+                        <div style="background:rgba(255,100,0,.3)">public grilling</div>
+                        <div style="background:rgba(0,255,0,.3)">riding a citybike</div>
+                        <div style="background:rgba(0,0,255,.3)">visiting local markets</div>
+                        <div style="background:rgba(0,255,100,.3)">checking out the universities</div>
+                        <div style="background:rgba(255,0,0,.3)">swimming</div>
+                        <div style="background:rgba(255,255,0,.3)">going to museums</div>
+                        <div style="background:rgba(0,0,0,.5)">camping</div>
+                        <div style="background:rgba(0,255,255,.3)">exploring castles</div>
                     </div>
                 </div>
+                <div id="cultureMap">
+
+                </div>
+                
             </section>
             <section id="public-transport">
 
@@ -71,10 +74,20 @@
         <script src="js/vendor/jquery.scrollarama.js"></script>
         <script src="js/vendor/jquery.scrollto.js"></script>
         <script src="http://openlayers.org/api/OpenLayers.js"></script>
-        <script src="js/vendor/raphael.js"></script>
-        <script src="js/vendor/d3.js"></script>
+        <!-- <script src="js/vendor/raphael.js"></script>
+        <script src="js/vendor/d3.js"></script> -->
         <script src="js/visualizations.js"></script>
         <script src="js/main.js"></script>
-
+        <!-- <script type="text/javascript">
+        var pkBaseURL = (("https:" == document.location.protocol) ? "https://www.patrick-wied.at/helper/piwik/" : "http://www.patrick-wied.at/helper/piwik/");
+        document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+        </script><script type="text/javascript">
+        try {
+        var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 1);
+        piwikTracker.trackPageView();
+        piwikTracker.enableLinkTracking();
+        } catch( err ) {}
+    </script><noscript><p><img src="http://www.patrick-wied.at/helper/piwik/piwik.php?idsite=1" style="border:0" alt="" /></p></noscript>
+    <!-- End Piwik Tag -->
     </body>
 </html>

@@ -254,6 +254,9 @@ section {
     padding:10px;
     cursor:pointer;
 }
+#tags_slide2 div:hover{
+    box-shadow:0 0 0 10px rgba(0,0,0,.2);
+}
 #spacer_slide2 {
     margin-top:100px;
     color:white;
@@ -280,10 +283,14 @@ h1, h2, h3 { padding:0; margin:0; font-weight:200; }
     z-index:10000;
     width:100%;
     height:100%;
+    background: radial-gradient(farthest-side at 70% 50% , transparent, rgba(0,0,0,.8)) no-repeat transparent;
     background: -webkit-gradient(radial, 50% 50%, 0, 90% 50%, 1000, from(transparent), to(rgba(0,0,0,1)) ) no-repeat rgba(0,0,0,0);
+
 }
 
-
+#OpenLayers.Layer.Markers_5 {
+    z-index:1000000 !important;
+}
 /* ==========================================================================
    Media Queries
    ========================================================================== */
