@@ -35,5 +35,12 @@ $(document).ready(function(){
 		}
 	}
 
+	$('#parallax .parallax-layer').parallax({
+      mouseport: jQuery('#parallax')
+    });
+    $("#parallax div").each( function(index) {
+    $(this).css("opacity", (index+1)/4);
+    });
+
 
 });

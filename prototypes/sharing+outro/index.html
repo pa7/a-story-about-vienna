@@ -62,50 +62,62 @@
 </head>
 
 <body>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 
-    <div class="parallax-viewport" id="parallax">
-        <div class="parallax-layer" style="width: 1920px; height: 1140px; margin-top: -550px; left: 0%; margin-left: 0px;">
-            <img src="img/4/1.png" alt="" style="position:absolute;">
-        </div>
-        <div class="parallax-layer" style="width: 2000px; height: 332px; margin-top: -163px; left: 0%; margin-left: 0px;">
-            <img src="img/3/1.png" alt="" style="position: absolute; margin-bottom: 175px">
-        </div>
-        <div class="parallax-layer" style="width: 2500px; height: 627px; margin-top: -310px; left: 0%; margin-left: 0px;">
-            <img src="img/2/1.png" alt="" style="position:absolute; top: 150px;">
-        </div>
-        <div class="parallax-layer" style="width: 3000px; height: 678px; margin-top: -360px; left: 0%; margin-left: 0px;">
-            <img src="img/1/1.png" alt="" style="position:absolute; top: 200px">
-        </div>
-	
-      <div id="share">
-	  <h2>Mind blown? Spread the word!</h2>
-	  <div class="socialmedia">
-	    <div class="circle fb_like">
-	      Like
-	    </div>
-	    <div class="circle fb_post">
-	      Recommend
-	    </div>
-	    <div class="circle tweet">
-	      Tweet
-	    </div>
-	  </div>
+
+
+  <div class="parallax-viewport" id="parallax">
+      <div class="parallax-layer" style="width: 1920px; height: 1140px; margin-top: -550px; left: 0%; margin-left: 0px;">
+          <img src="img/4/1.png" alt="" style="position:absolute;">
       </div>
-    
+      <div class="parallax-layer" style="width: 2000px; height: 332px; margin-top: -163px; left: 0%; margin-left: 0px;">
+          <img src="img/3/1.png" alt="" style="position: absolute; margin-bottom: 175px">
+      </div>
+      <div class="parallax-layer" style="width: 2500px; height: 627px; margin-top: -310px; left: 0%; margin-left: 0px;">
+          <img src="img/2/1.png" alt="" style="position:absolute; top: 150px;">
+      </div>
+      <div class="parallax-layer" style="width: 3000px; height: 678px; margin-top: -360px; left: 0%; margin-left: 0px;">
+          <img src="img/1/1.png" alt="" style="position:absolute; top: 200px">
+      </div>
+
+    <div id="share">
+  <h2>Mind blown? Spread the word!</h2>
+  <div class="socialmedia">
+    <div class="circle fb_like">
+      <div class="fb-like" data-send="false" data-show-faces="false"></div>
     </div>
+    <div class="circle fb_post">
+      Recommend
+    </div>
+    <div class="circle tweet">
+      <a href="https://twitter.com/share" class="twitter-share-button" data-count="none">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    </div>
+  </div>
+    </div>
+  
+  </div>
     
 	
   <script src="img/jquery_003.js"></script>
   <script src="img/jquery_002.js"></script>
-  <script src="img/jquery.js"></script>
+  <script src="img/jquery.parallax.js"></script>
   <script>
-  jQuery(document).ready(function(){
-    jQuery('#parallax .parallax-layer')
+
+  $(document).ready(function(){
+    $('#parallax .parallax-layer')
     .parallax({
-      mouseport: jQuery('#parallax')
+      mouseport: $('#parallax')
     });
     $("#parallax div").each( function(index) {
-	$(this).css("opacity", (index+1)/4);
+	   $(this).css("opacity", (index+1)/4);
     });
   });
   </script>

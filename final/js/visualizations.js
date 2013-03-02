@@ -126,6 +126,5 @@ map.addControl(new OpenLayers.Control.LayerSwitcher());
 	}());
 
 
-	viz[""]
 
 }(this));
