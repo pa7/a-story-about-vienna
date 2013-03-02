@@ -47,6 +47,7 @@
 			normalProjection = null,
 			baseProjection = null,
 			markerLayer = null,
+			fmzk = null,
 			init = function(){
 				$('#tags_slide2 div').click(function() {
 					updateLayer("d"+$(this).index());
@@ -87,7 +88,7 @@
 			            };
 			            var doc = request.responseText,
 			                caps = format.read(doc);
-			            fmzk = format.createLayer(caps, OpenLayers.Util.applyDefaults(
+			            /*fmzk = format.createLayer(caps, OpenLayers.Util.applyDefaults(
 			                {layer:"fmzk", requestEncoding:"REST", transitionEffect:"resize"}, defaults
 			            ));
 
@@ -95,7 +96,11 @@
 			                {layer:"beschriftung", requestEncoding:"REST", isBaseLayer: false},
 			                defaults
 			            ));
-			            map.addLayers([fmzk, labels]);
+			            map.addLayers([fmzk, labels]); */
+			            fmzk = format.createLayer(caps, OpenLayers.Util.applyDefaults(
+			                {layer:"lb", requestEncoding:"REST", transitionEffect:"resize"}, defaults
+			            ));
+			            map.addLayer(fmzk);
 			            zoomToInitialExtent();
 			        }
 			    });
@@ -127,7 +132,7 @@
 				}
 				var timeMs = 2000 / $(data[dataId]).size();
 
-				var size = new OpenLayers.Size(16,16);
+				var size = new OpenLayers.Size(20,20);
 				var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
 				var icon = new OpenLayers.Icon(dataIcons[dataId], size, offset);
 				
@@ -150,11 +155,79 @@
 
 
 	viz["PublicTransport"] = (function(){
+		var map = null,
+			normalProjection = null,
+			baseProjection = null,
+			markerLayer = null,
+			fmzk = null,
+			init = function() {
+				// Defaults for the WMTS layers
+			    var defaults = {
+			        zoomOffset: 12,
+			        requestEncoding: "REST",
+			        matrixSet: "google3857",
+			        attribution: '<div style="background:white;">Datenquelle: Stadt Wien - <a href="http://data.wien.gv.at">data.wien.gv.at</a></div>'
+			    };
+				map = new OpenLayers.Map({
+			    	div: "ptMap",
+			        theme: null,
+			        projection: "EPSG:3857",
+			        units: "m",
+			        maxExtent: [-20037508.34, -20037508.34, 20037508.34, 20037508.34],
+			        maxResolution: 156543.0339,
+			        controls: [
+			            new OpenLayers.Control.Attribution()
+			        ]
+				});
+				baseProjection = new OpenLayers.Projection("EPSG:3857");
+				normalProjection = new OpenLayers.Projection("EPSG:4326");
+				function zoomToInitialExtent() {
+			        map.setCenter(new OpenLayers.LonLat(1819237.393019, 6142104.9771083), 12);
+			    };
 
+			   
+			    OpenLayers.Request.GET({
+			        url: "misc/WMTSCapabilities.xml",
+			        success: function(request) {
+			            var format = new OpenLayers.Format.WMTSCapabilities();
+			            var defaults = {
+			                requestEncoding: "REST",
+			                matrixSet: "google3857",
+			        		attribution: '<div style="background:white;padding:3px;">Datenquelle: Stadt Wien - <a href="http://data.wien.gv.at">data.wien.gv.at</a></div>'
+			            };
+			            var doc = request.responseText,
+			                caps = format.read(doc);
+			            fmzk = format.createLayer(caps, OpenLayers.Util.applyDefaults(
+			                {layer:"fmzk", requestEncoding:"REST", transitionEffect:"resize"}, defaults
+			            ));
+
+			            labels = format.createLayer(caps, OpenLayers.Util.applyDefaults(
+			                {layer:"beschriftung", requestEncoding:"REST", isBaseLayer: false},
+			                defaults
+			            ));
+			            map.addLayers([fmzk, labels]); 
+			            map.addLayer(fmzk);
+			            zoomToInitialExtent();
+			        }
+			    });
+				markerLayer = new OpenLayers.Layer.Markers();
+				map.addLayer(markerLayer);
+				var georss = new OpenLayers.Layer.GeoRSS(0, 'misc/ubahnen.xml');
+				setTimeout(function(){ 
+					//extremely ugly
+					$.each(georss.markers, function(key,value){
+						// EXTREMELY TERRIFYING UGLY!!!
+						value.lonlat = new OpenLayers.LonLat(value.lonlat.lon, value.lonlat.lat).transform(normalProjection, baseProjection);
+						georss.addMarker(value);
+					});
+
+				 }, 1000);
+				
+				map.addLayer(georss);
+
+			};
 		return {
-			init: function(){
-
-			}
+			init: init
 		}
 	}());
 
