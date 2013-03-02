@@ -210,9 +210,35 @@
 			            zoomToInitialExtent();
 			        }
 			    });
-				markerLayer = new OpenLayers.Layer.Markers();
-				map.addLayer(markerLayer);
-				var georss = new OpenLayers.Layer.GeoRSS(0, 'misc/ubahnen.xml');
+				
+
+				var size = new OpenLayers.Size(18,18);
+				var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
+				var icon = new OpenLayers.Icon("img/icons/bim.png", size, offset);
+
+				var georss2 = new OpenLayers.Layer.GeoRSS(0, 'misc/strassenbahnen_.xml', {
+					icon: icon
+				});
+
+				setTimeout(function(){ 
+					//extremely ugly
+					$.each(georss2.markers, function(key,value){
+						// EXTREMELY TERRIFYING UGLY!!!
+						value.lonlat = new OpenLayers.LonLat(value.lonlat.lon, value.lonlat.lat).transform(normalProjection, baseProjection);
+						georss2.addMarker(value);
+					});
+
+				 }, 1500);
+				
+				map.addLayer(georss2);
+				var size = new OpenLayers.Size(18,18);
+				var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
+				var icon = new OpenLayers.Icon("img/icons/ubahn.png", size, offset);
+
+				var georss = new OpenLayers.Layer.GeoRSS(0, 'misc/ubahnen.xml', {
+					icon: icon
+				});
+
 				setTimeout(function(){ 
 					//extremely ugly
 					$.each(georss.markers, function(key,value){
@@ -221,7 +247,7 @@
 						georss.addMarker(value);
 					});
 
-				 }, 1000);
+				 }, 1500);
 				
 				map.addLayer(georss);
 
