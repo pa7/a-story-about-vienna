@@ -54,6 +54,9 @@ $(document).ready(function(){
 	$('#btn_slide1').click(function(){
 		$(window).scrollTo($('#cultural'), 500);
 	});
+	$('#btn_slide2').click(function(){
+		$(window).scrollTo($('#public-transport'), 1000);
+	});
 
 	$("#msg").click(function(){
 		$(window).scrollTo($('#districts'), 2000);

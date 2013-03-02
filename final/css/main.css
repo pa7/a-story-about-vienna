@@ -232,6 +232,36 @@ section {
     background-color:#1d1d1d;
 }
 
+#btn_slide2 {
+    width:auto;
+    display:table;
+    position:absolute;
+    bottom:60px;
+    left:80px;
+    line-height:30px;
+    padding:10px;
+    cursor:pointer;
+    background-color:#c32222;
+    background-image:linear-gradient(rgba(255,255,255,.1), rgba(255,255,255,.0));
+    background-image:-webkit-linear-gradient(rgba(255,255,255,.1), rgba(255,255,255,.0));
+    border-radius:10px;
+    font-size:25px;
+    padding-top:12px;
+    border:1px solid #910202;
+    box-shadow:0 0 2px black;
+    color:white;
+    text-shadow:2px 2px 0 #910202;   
+}
+#btn_slide2:hover {
+    box-shadow:0 0 10px black;
+    background-color:#222222;
+    text-shadow:2px 2px 0 black;
+    border:1px solid black;
+}
+#btn_slide2:active {
+    background-color:#1d1d1d;
+}
+
 #cultureOverlay h2 {
     margin-top:30px;
     background:rgba(255,255,255,0.6);
