@@ -10,6 +10,7 @@ body {
   /* Set as position parent */
   position: relative;
   color: #444444;
+  overflow-x: hidden;
 }
 
 body > header {
