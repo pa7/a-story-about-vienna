@@ -8,13 +8,37 @@ $(document).ready(function(){
     	blocks: 'section',
     	enablePin: false
 	});
+    var once = true;
 
 	var block = {
 		"0": function(){
-				console.log("hello world block1");
+			
 		},
 		"1": function(){
-			console.log("hello world block2");	
+			
+		},
+		"2": function() {
+
+		if(once){
+			once = false;
+        // trigger the tram animation
+        $('#tram').animate({
+          left: -1410
+        }, {
+          duration:800,
+          complete: function(){
+          	
+            sr.animate('#tram', {
+              property: 'left',
+              // this needs to be optimized based on screen height (dynamically get it with jquery?)
+              delay:($('section')[2]).offsetTop - $($('section')[2]).height(),
+              start: -1410,
+              end: $(window).width(),
+              duration:$($('section')[2]).height()
+            });
+          }
+        });
+	    }
 		}
 	};
 
@@ -27,6 +51,13 @@ $(document).ready(function(){
 
 	});
 
+	$('#btn_slide1').click(function(){
+		$(window).scrollTo($('#cultural'), 500);
+	});
+
+	$("#msg").click(function(){
+		$(window).scrollTo($('#districts'), 2000);
+	});
 
 	// initialize all the visualizations
 	for(var key in viz){
