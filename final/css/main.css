@@ -619,49 +619,10 @@ border-top-color: #fff;
 
 /* =============== POPULATION/ECONOMY ============ */
 
-
-svg {
-  font: 10px sans-serif;
+#economy .col {
+    width: 50%;
+    float: left;
 }
-
-.y.axis path {
-  display: none;
-}
-
-.y.axis line {
-  stroke: #fff;
-  stroke-opacity: .2;
-  shape-rendering: crispEdges;
-}
-
-.y.axis .major line {
-  stroke: #999;
-  stroke-opacity: 1;
-}
-
-.title {
-  font: 300 78px Helvetica Neue;
-  fill: #666;
-}
-
-.birthyear,
-.age {
-  text-anchor: middle;
-}
-
-.birthyear {
-  fill: #fff;
-}
-
-rect {
-  fill-opacity: .6;
-  fill: #e377c2;
-}
-
-rect:first-child {
-  fill: #1f77b4;
-}
-
 #holder {
   height: 500px;
   float: left;
@@ -718,3 +679,31 @@ rect:first-child {
       font-size: 2.5em;
       text-shadow: 2px 2px 2px white;
     }
+
+#c {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    padding: 7px;
+    font-weight: 200;
+    background-color: white;
+    opacity: 0.5;
+    z-index: 10001;
+    font-size: 1em;
+    text-decoration: none;
+    color: black;
+}
+
+#credits {
+    width: 700px;
+    height: 400px;
+    position: fixed;
+    
+}
+
+#credits .col {
+    width: 200px;
+    height: 300px;
+    float: left;
+    margin: 20px;
+}

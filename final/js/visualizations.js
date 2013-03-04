@@ -259,140 +259,13 @@
 
 
 
-    viz["Population"] = (function(){
+    viz["PopulationByCountryOfBirth"] = (function(){
             var map = null,
                 normalProjection = null,
                 baseProjection = null,
                 markerLayer = null,
                 fmzk = null,
                 init = function() {
-                                
-                var margin = {top: 20, right: 40, bottom: 30, left: 20},
-                    width = 600 - margin.left - margin.right,
-                    height = 300 - margin.top - margin.bottom,
-                    barWidth = Math.floor(width / 19) - 1;
-
-                var x = d3.scale.linear()
-                    .range([barWidth / 2, width - barWidth / 2]);
-
-                var y = d3.scale.linear()
-                    .range([height, 0]);
-
-                var yAxis = d3.svg.axis()
-                    .scale(y)
-                    .orient("right")
-                    .tickSize(-width)
-                    .tickFormat(function(d) { return Math.round(d / 1e6) + "M"; });
-
-                // An SVG element with a bottom-right origin.
-                var svg = d3.select("#population").append("svg")
-                    .attr("width", width + margin.left + margin.right)
-                    .attr("height", height + margin.top + margin.bottom)
-                  .append("g")
-                    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-                // A sliding container to hold the bars by birthyear.
-                var birthyears = svg.append("g")
-                    .attr("class", "birthyears");
-
-                // A label for the current year.
-                var title = svg.append("text")
-                    .attr("class", "title")
-                    .attr("dy", ".71em")
-                    .text(2000);
-
-                d3.csv("data/population.csv", function(error, data) {
-
-                  // Convert strings to numbers.
-                  data.forEach(function(d) {
-                    d.people = +d.people;
-                    d.year = +d.year;
-                    d.age = +d.age;
-                  });
-
-                  // Compute the extent of the data set in age and years.
-                  var age1 = d3.max(data, function(d) { return d.age; }),
-                      year0 = d3.min(data, function(d) { return d.year; }),
-                      year1 = d3.max(data, function(d) { return d.year; }),
-                      year = year1;
-
-                  // Update the scale domains.
-                  x.domain([year1 - age1, year1]);
-                  y.domain([0, d3.max(data, function(d) { return d.people; })]);
-
-                  // Produce a map from year and birthyear to [male, female].
-                  data = d3.nest()
-                      .key(function(d) { return d.year; })
-                      .key(function(d) { return d.year - d.age; })
-                      .rollup(function(v) { return v.map(function(d) { return d.people; }); })
-                      .map(data);
-
-                  // Add an axis to show the population values.
-                  svg.append("g")
-                      .attr("class", "y axis")
-                      .attr("transform", "translate(" + width + ",0)")
-                      .call(yAxis)
-                    .selectAll("g")
-                    .filter(function(value) { return !value; })
-                      .classed("major", true);
-
-                  // Add labeled rects for each birthyear (so that no enter or exit is required).
-                  var birthyear = birthyears.selectAll(".birthyear")
-                      .data(d3.range(year0 - age1, year1 + 1, 5))
-                    .enter().append("g")
-                      .attr("class", "birthyear")
-                      .attr("transform", function(birthyear) { return "translate(" + x(birthyear) + ",0)"; });
-
-                  birthyear.selectAll("rect")
-                      .data(function(birthyear) { return data[year][birthyear] || [0, 0]; })
-                    .enter().append("rect")
-                      .attr("x", -barWidth / 2)
-                      .attr("width", barWidth)
-                      .attr("y", y)
-                      .attr("height", function(value) { return height - y(value); });
-
-                  // Add labels to show birthyear.
-                  birthyear.append("text")
-                      .attr("y", height - 4)
-                      .text(function(birthyear) { return birthyear; });
-
-                  // Add labels to show age (separate; not animated).
-                  svg.selectAll(".age")
-                      .data(d3.range(0, age1 + 1, 5))
-                    .enter().append("text")
-                      .attr("class", "age")
-                      .attr("x", function(age) { return x(year - age); })
-                      .attr("y", height + 4)
-                      .attr("dy", ".71em")
-                      .text(function(age) { return age; });
-
-                  // Allow the arrow keys to change the displayed year.
-                  window.focus();
-                  d3.select(window).on("keydown", function() {
-                    switch (d3.event.keyCode) {
-                      case 37: year = Math.max(year0, year - 10); break;
-                      case 39: year = Math.min(year1, year + 10); break;
-                    }
-                    update();
-                  });
-
-                  function update() {
-                    if (!(year in data)) return;
-                    title.text(year);
-
-                    birthyears.transition()
-                        .duration(750)
-                        .attr("transform", "translate(" + (x(year1) - x(year)) + ",0)");
-
-                    birthyear.selectAll("rect")
-                        .data(function(birthyear) { return data[year][birthyear] || [0, 0]; })
-                      .transition()
-                        .duration(750)
-                        .attr("y", y)
-                        .attr("height", function(value) { return height - y(value); });
-                  }
-                });
-
                 Raphael.fn.pieChart = function (cx, cy, r, values, labels, stroke) {
                     var paper = this,
                         rad = Math.PI / 180,
@@ -445,7 +318,7 @@
                     var values = [ 68.258606966, 5.9608681534,  3.8664034505, 2.4871049962, 2.3310143878, 1.9963046296, 0.5393056956, 1.3346436669, 1.0145889547, 0.9098197429, 11.3013393563],
                         labels = ["Austria","Serbia and Montenegro","Turkey","Germany","Poland",          "Bosnia","Croatia","Romania",       "Czech Republic",   "Hungary",  "Other"];
                         
-                    Raphael("holder", 700, 700).pieChart(350, 350, 200, values, labels, "#fff");
+                    Raphael("population", 700, 700).pieChart(350, 350, 200, values, labels, "#fff");
                 });
 
             };
@@ -454,7 +327,184 @@
         }
     }());
 
+    
+    viz["GDP"] = (function(){
+            var map = null,
+                normalProjection = null,
+                baseProjection = null,
+                markerLayer = null,
+                fmzk = null,
+                init = function() {
+                
+		
+    Raphael.fn.drawGrid = function (x, y, w, h, wv, hv, color) {
+    color = color || "#000";
+    var path = ["M", Math.round(x) + .5, Math.round(y) + .5, "L", Math.round(x + w) + .5, Math.round(y) + .5, Math.round(x + w) + .5, Math.round(y + h) + .5, Math.round(x) + .5, Math.round(y + h) + .5, Math.round(x) + .5, Math.round(y) + .5],
+        rowHeight = h / hv,
+        columnWidth = w / wv;
+    for (var i = 1; i < hv; i++) {
+        path = path.concat(["M", Math.round(x) + .5, Math.round(y + i * rowHeight) + .5, "H", Math.round(x + w) + .5]);
+    }
+    for (i = 1; i < wv; i++) {
+        path = path.concat(["M", Math.round(x + i * columnWidth) + .5, Math.round(y) + .5, "V", Math.round(y + h) + .5]);
+    }
+    return this.path(path.join(",")).attr({stroke: color});
+};
 
+
+window.onload = function () {
+    function getAnchors(p1x, p1y, p2x, p2y, p3x, p3y) {
+        var l1 = (p2x - p1x) / 2,
+            l2 = (p3x - p2x) / 2,
+            a = Math.atan((p2x - p1x) / Math.abs(p2y - p1y)),
+            b = Math.atan((p3x - p2x) / Math.abs(p2y - p3y));
+        a = p1y < p2y ? Math.PI - a : a;
+        b = p3y < p2y ? Math.PI - b : b;
+        var alpha = Math.PI / 2 - ((a + b) % (Math.PI * 2)) / 2,
+            dx1 = l1 * Math.sin(alpha + a),
+            dy1 = l1 * Math.cos(alpha + a),
+            dx2 = l2 * Math.sin(alpha + b),
+            dy2 = l2 * Math.cos(alpha + b);
+        return {
+            x1: p2x - dx1,
+            y1: p2y + dy1,
+            x2: p2x + dx2,
+            y2: p2y + dy2
+        };
+    }
+    // Grab the data
+    var labels = [1995,
+1996,
+1997,
+1998,
+1999,
+2000,
+2001,
+2002,
+2003,
+2004,
+2005,
+2006,
+2007,
+2008
+],
+        data = [31800,
+32700,
+32800,
+34200,
+35300,
+36600,
+37400,
+38400,
+38400,
+38900,
+40000,
+41700,
+43500,
+44700
+];
+    
+    // Draw
+    var width = 800,
+        height = 250,
+        leftgutter = 30,
+        bottomgutter = 20,
+        topgutter = 20,
+        colorhue = .6 || Math.random(),
+        color = "hsl(" + [colorhue, .5, .5] + ")",
+        r = Raphael("gdp", width, height),
+        txt = {font: '12px Helvetica, Arial', fill: "#fff"},
+        txt1 = {font: '10px Helvetica, Arial', fill: "#fff"},
+        txt2 = {font: '12px Helvetica, Arial', fill: "#000"},
+        X = (width - leftgutter) / labels.length,
+        max = Math.max.apply(Math, data),
+        Y = (height - bottomgutter - topgutter) / max;
+    r.drawGrid(leftgutter + X * .5 + .5, topgutter + .5, width - leftgutter - X, height - topgutter - bottomgutter, 10, 10, "#000");
+    var path = r.path().attr({stroke: color, "stroke-width": 4, "stroke-linejoin": "round"}),
+        bgp = r.path().attr({stroke: "none", opacity: .3, fill: color}),
+        label = r.set(),
+        lx = 0, ly = 0,
+        is_label_visible = false,
+        leave_timer,
+        blanket = r.set();
+    label.push(r.text(60, 12, "24 hits").attr(txt));
+    label.push(r.text(60, 27, "22 September 2008").attr(txt1).attr({fill: color}));
+    label.hide();
+    var frame = r.popup(100, 100, label, "right").attr({fill: "#000", stroke: "#666", "stroke-width": 2, "fill-opacity": .7}).hide();
+
+    var p, bgpp;
+    for (var i = 0, ii = labels.length; i < ii; i++) {
+        var y = Math.round(height - bottomgutter - Y * data[i]),
+            x = Math.round(leftgutter + X * (i + .5)),
+            t = r.text(x, height - 6, labels[i]).attr(txt).toBack();
+        if (!i) {
+            p = ["M", x, y, "C", x, y];
+            bgpp = ["M", leftgutter + X * .5, height - bottomgutter, "L", x, y, "C", x, y];
+        }
+        if (i && i < ii - 1) {
+            var Y0 = Math.round(height - bottomgutter - Y * data[i - 1]),
+                X0 = Math.round(leftgutter + X * (i - .5)),
+                Y2 = Math.round(height - bottomgutter - Y * data[i + 1]),
+                X2 = Math.round(leftgutter + X * (i + 1.5));
+            var a = getAnchors(X0, Y0, x, y, X2, Y2);
+            p = p.concat([a.x1, a.y1, x, y, a.x2, a.y2]);
+            bgpp = bgpp.concat([a.x1, a.y1, x, y, a.x2, a.y2]);
+        }
+        var dot = r.circle(x, y, 4).attr({fill: "#333", stroke: color, "stroke-width": 2});
+        blanket.push(r.rect(leftgutter + X * i, 0, X, height - bottomgutter).attr({stroke: "none", fill: "#fff", opacity: 0}));
+        var rect = blanket[blanket.length - 1];
+        (function (x, y, data, lbl, dot) {
+            var timer, i = 0;
+            rect.hover(function () {
+                clearTimeout(leave_timer);
+                var side = "right";
+                if (x + frame.getBBox().width > width) {
+                    side = "left";
+                }
+                var ppp = r.popup(x, y, label, side, 1),
+                    anim = Raphael.animation({
+                        path: ppp.path,
+                        transform: ["t", ppp.dx, ppp.dy]
+                    }, 200 * is_label_visible);
+                lx = label[0].transform()[0][1] + ppp.dx;
+                ly = label[0].transform()[0][2] + ppp.dy;
+                frame.show().stop().animate(anim);
+                label[0].attr({text: data + " Euro per person"}).show().stop().animateWith(frame, anim, {transform: ["t", lx, ly]}, 200 * is_label_visible);
+                label[1].attr({text: lbl + ""}).show().stop().animateWith(frame, anim, {transform: ["t", lx, ly]}, 200 * is_label_visible);
+                dot.attr("r", 6);
+                is_label_visible = true;
+            }, function () {
+                dot.attr("r", 4);
+                leave_timer = setTimeout(function () {
+                    frame.hide();
+                    label[0].hide();
+                    label[1].hide();
+                    is_label_visible = false;
+                }, 1);
+            });
+        })(x, y, data[i], labels[i], dot);
+    }
+    p = p.concat([x, y, x, y]);
+    bgpp = bgpp.concat([x, y, x, y, "L", x, height - bottomgutter, "z"]);
+    path.attr({path: p});
+    bgp.attr({path: bgpp});
+    frame.toFront();
+    label[0].toFront();
+    label[1].toFront();
+    blanket.toFront();
+};
+
+
+            };
+        return {
+            init: init
+        }
+    }());
+
+    
+    
+    
+    
 
 
 }(this));
