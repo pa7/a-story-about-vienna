@@ -13,6 +13,7 @@ textarea {
 body {
     font-size: 1em;
     line-height: 1.4;
+    overflow-x: hidden;
 }
 
 ::-moz-selection {
@@ -169,6 +170,7 @@ body { overflow-x:hidden; }
 section {
   height:100%;
   position:relative;
+  overflow-x:hidden
 }
 
 #intro {
@@ -617,6 +619,59 @@ border-top-color: #fff;
 
 
 
+/* =============== POPULATION/ECONOMY ============ */
+
+
+svg {
+  font: 10px sans-serif;
+}
+
+.y.axis path {
+  display: none;
+}
+
+.y.axis line {
+  stroke: #fff;
+  stroke-opacity: .2;
+  shape-rendering: crispEdges;
+}
+
+.y.axis .major line {
+  stroke: #999;
+  stroke-opacity: 1;
+}
+
+.title {
+  font: 300 78px Helvetica Neue;
+  fill: #666;
+}
+
+.birthyear,
+.age {
+  text-anchor: middle;
+}
+
+.birthyear {
+  fill: #fff;
+}
+
+rect {
+  fill-opacity: .6;
+  fill: #e377c2;
+}
+
+rect:first-child {
+  fill: #1f77b4;
+}
+
+#holder {
+  height: 500px;
+  float: left;
+}
+
+
+
+
 /* =============== SHARE/OUTRO ================== */
 
 
@@ -645,13 +700,11 @@ border-top-color: #fff;
     
     #share .circle {
       float: left;
-      height: 40px;
+      height: 150px;
       width: 150px;
-      border-radius: 100px;
-      background: white;
-      margin: 20px;
-      padding: 55px 0px;
+      background: img("../img/icons/circle.png");
       box-shadow: 4px 4px 15px #afa1b1;
+      
     }
     
     #share .circle:hover {
