@@ -700,13 +700,17 @@ rect:first-child {
       float: left;
       height: 150px;
       width: 150px;
-      background: img("../img/icons/circle.png");
+      background: white;
+      border-radius: 75px;
       box-shadow: 4px 4px 15px #afa1b1;
-      
+      margin: 20px;
+      margin-top: 50px;
+      opacity: 0.8;
     }
     
     #share .circle:hover {
-      background: #eee;
+      box-shadow: 4px 4px 15px #afa1b1;
+      opacity: 1;
     }
     
     #share h2 {
