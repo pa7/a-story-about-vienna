@@ -13,6 +13,7 @@ textarea {
 body {
     font-size: 1em;
     line-height: 1.4;
+    overflow-x: hidden;
 }
 
 ::-moz-selection {
@@ -697,13 +698,11 @@ rect:first-child {
     
     #share .circle {
       float: left;
-      height: 40px;
+      height: 150px;
       width: 150px;
-      border-radius: 100px;
-      background: white;
-      margin: 20px;
-      padding: 55px 0px;
+      background: img("../img/icons/circle.png");
       box-shadow: 4px 4px 15px #afa1b1;
+      
     }
     
     #share .circle:hover {

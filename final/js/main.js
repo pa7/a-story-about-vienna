@@ -70,10 +70,11 @@ $(document).ready(function(){
 	}
 
 	$('#parallax .parallax-layer').parallax({
-      mouseport: jQuery('#parallax')
+      mouseport: jQuery('#parallax'),
+      delay: 2000
     });
     $("#parallax div").each( function(index) {
-    $(this).css("opacity", (index+1)/4);
+  	  $(this).css("opacity", (index+1)/3);
     });
 
 
