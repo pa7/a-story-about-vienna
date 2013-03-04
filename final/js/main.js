@@ -59,7 +59,8 @@ $(document).ready(function(){
 	});
 
 	$("#msg").click(function(){
-		$(window).scrollTo($('#districts'), 2000);
+		// todo update to districts/economy
+		$(window).scrollTo($('#finish'), 2000);
 	});
 
 	// initialize all the visualizations

@@ -164,6 +164,7 @@ html, body {
     padding:0;
 }
 
+body { overflow-x:hidden; }
 
 section {
   height:100%;
