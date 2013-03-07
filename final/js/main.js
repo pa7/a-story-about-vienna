@@ -1,9 +1,8 @@
 $(document).ready(function(){
+    
+    var viz = window["DataVIZ"];
 
-	var viz = window["DataVIZ"];
-
-
-	// at first, initialize the "slide" interactions with scrollarama
+    // at first, initialize the "slide" interactions with scrollarama
     var sr = $.scrollorama({
     	blocks: 'section',
     	enablePin: false
@@ -59,7 +58,11 @@ $(document).ready(function(){
 	});
 
 	$("#msg").click(function(){
-		$(window).scrollTo($('#districts'), 2000);
+		$(window).scrollTo($('#economy'), 2000);
+	});
+
+	$("#btn_slide3").click(function(){
+		$(window).scrollTo($('#finish'), 2000);
 	});
 
 	// initialize all the visualizations

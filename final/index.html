@@ -14,6 +14,22 @@
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="css/openlayers.css">
         <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+        <script src="js/vendor/jquery.queryloader2.js" type="text/javascript"></script>
+        <script>
+            <!--
+            $(document).ready(function(){
+                $("body").queryLoader2();
+                
+                /* for iOS devices:
+                 *
+                window.addEventListener('DOMContentLoaded', function() {
+                    $("body").queryLoader2();
+                });*/
+            });
+            -->
+        </script>
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -38,7 +54,7 @@
                     <h2>There are lots of things to do in Vienna</h2>
                     <div id="spacer_slide2">such as...</div>
                     <div id="tags_slide2">
-                        <div style="background:rgba(255,100,0,.3)">public grilling</div>
+                        <div style="background:rgba(255,100,0,.3)">public barbecuing</div>
                         <div style="background:rgba(0,255,0,.3)">riding a citybike</div>
                         <div style="background:rgba(0,0,255,.3)">visiting local markets</div>
                         <div style="background:rgba(0,255,100,.3)">checking out the universities</div>
@@ -78,6 +94,10 @@
 
                 <div id="population" class="col">
                 </div>
+                
+                <div id="btn_slide2">
+                    What's next?
+                </div>
 
             </section>
             <section id="finish">
@@ -95,7 +115,7 @@
                         <img src="img/1/1.png" alt="" style="position:absolute; top: 200px">
                     </div>
                 
-                  <div id="share">
+                <div id="share">
                   <h2>Mind blown? Spread the word!</h2>
                   <div class="socialmedia">
                     <div class="circle fb_like">
@@ -118,10 +138,10 @@
             
             <div id="credits">
                 <div class="">
-                    this visualization was brought to you by patrick wied and sarah howorka.
+                    This visualization was brought to you by Patrick Wied and Sarah Howorka using the following resources:
                 </div>
                 <div class="col">
-                    <h2>libraries used:</h2>
+                    <h2>JavaSciprt Libraries:</h2>
                     jquery<br>
                     scrollarama<br>
                     scrollto<br>
@@ -131,12 +151,12 @@
                 </div>
                 
                 <div class="col">
-                    <h2>used data:</h2>
+                    <h2>Data sets:</h2>
                     bevoelkerung in wien migranten<br>
                 </div>
                 
                 <div class="col">
-                    <h2>used images:</h2>
+                    <h2>Images:</h2>
                     votivkirche<br>
                     museum<br>
                     karlskirche<br>
@@ -145,10 +165,7 @@
                     vienna panorama
                 </div>
             </div>
-
-    
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+            
         <script src="js/vendor/jquery.scrollarama.js"></script>
         <script src="js/vendor/jquery.scrollto.js"></script>
         <script src="http://openlayers.org/api/OpenLayers.js"></script>
