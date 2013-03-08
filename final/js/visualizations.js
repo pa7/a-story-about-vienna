@@ -106,7 +106,7 @@
 			    });
 				markerLayer = new OpenLayers.Layer.Markers();
 				map.addLayer(markerLayer);
-
+				updateLayer("d0");
 			},
 			updateLayer = function(dataId){
 				//TODO:
@@ -220,13 +220,21 @@
 					icon: icon
 				});
 
-				setTimeout(function(){ 
-					//extremely ugly
+				var transf = function(){
 					$.each(georss2.markers, function(key,value){
 						// EXTREMELY TERRIFYING UGLY!!!
 						value.lonlat = new OpenLayers.LonLat(value.lonlat.lon, value.lonlat.lat).transform(normalProjection, baseProjection);
 						georss2.addMarker(value);
 					});
+				}
+
+				setTimeout(function(){ 
+					//extremely ugly
+					if(georss2.markers.length == 0){
+						setTimeout(transf, 1500);
+					}else{
+						transf();
+					}
 
 				 }, 1500);
 				
@@ -256,8 +264,6 @@
 			init: init
 		}
 	}());
-
-
 
     viz["PopulationByCountryOfBirth"] = (function(){
             var map = null,
@@ -326,7 +332,6 @@
             init: init
         }
     }());
-
     
     viz["GDP"] = (function(){
             var map = null,
@@ -500,11 +505,6 @@ window.onload = function () {
             init: init
         }
     }());
-
-    
-    
-    
-    
 
 
 }(this));

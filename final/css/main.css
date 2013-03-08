@@ -165,10 +165,12 @@ html, body {
     padding:0;
 }
 
+body { overflow-x:hidden; }
 
 section {
   height:100%;
   position:relative;
+  overflow-x:hidden
 }
 
 #intro {
