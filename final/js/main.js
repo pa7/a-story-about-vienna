@@ -81,5 +81,15 @@ $(document).ready(function(){
 	    $(this).css("opacity", (index+1)/3);
 	});
 
+	// social buttons
+	$('.fb_like').click(function(){
+		window.location.href = "http://www.facebook.com/sharer.php?u=http://www.patrick-wied.at/projects/a-story-about-vienna/&t=Vienna is beautiful. find out why!";
+	});
+	$('.email').click(function(){
+		window.location.href = "mailto:email@hotmail.com?subject=Vienna is beautiful&body=http://www.patrick-wied.at/projects/a-story-about-vienna/";
+	});
+	$('.tweet').click(function(){
+		window.location.href = "https://twitter.com/intent/tweet?url=http://www.patrick-wied.at/projects/a-story-about-vienna/&text=Vienna is beautiful. find out why!";
+	});
 
 });
