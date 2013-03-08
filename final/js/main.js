@@ -66,8 +66,16 @@ $(document).ready(function(){
 	});
 	
 	$("#c").click(function(){
-	    $("#credits").fadeIn();
-		
+	    if($(this).data("close")) {
+		$("#credits").fadeOut();
+		$(this).html("credits");
+		$(this).data("close",0);
+	    }
+	    else {
+		$("#credits").fadeIn();
+		$(this).html("close");
+		$(this).data("close",1);
+	    }
 	});
 
 	// initialize all the visualizations

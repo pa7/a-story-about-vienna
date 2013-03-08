@@ -704,29 +704,36 @@ border-top-color: #fff;
     font-weight: 200;
     background-color: white;
     opacity: 0.5;
-    z-index: 10001;
+    z-index: 10002;
     font-size: 1em;
     text-decoration: none;
     color: black;
+    cursor:pointer;
 }
 
 #credits {
+    z-index: 10001;
     width: 100%;
+    padding-top: 20px;
     height: 400px;
     position: fixed;
     bottom: 0px;
-    background:rgba(255,255,255,.2);
-    border-radius: 10px;
+    background:rgba(255,255,255,.7);
     box-shadow: 4px 4px 15px #afa1b1;
-    font-size: 0.8em;
     color: #222;
+    opacity: 0;
+}
+
+#credits .description {
+    font-size: 0.9em;
+    font-weight: 200;
 }
 
 #credits a {
     text-decoration: none;
     color: #222;
     display: block;
-    line-height: 15px;
+    line-height: 14px;
     margin: 2px;
     padding: 2px;
 }
@@ -735,8 +742,14 @@ border-top-color: #fff;
 }
 
 #credits .col {
+    font-size: 0.7em;
     width: 200px;
     height: 300px;
     float: left;
     margin: 20px;
+}
+
+#credits .center {
+    width: 720px;
+    margin: auto;
 }
