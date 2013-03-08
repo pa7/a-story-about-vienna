@@ -256,6 +256,10 @@ section {
     text-shadow:2px 2px 0 #910202;   
 }
 
+#btn_slide3 {
+    left:40%;
+}
+
 #cultureOverlay h2 {
     margin-top:30px;
     background:rgba(255,255,255,0.6);
@@ -385,6 +389,12 @@ border-top-color: #fff;
 
 .circle:hover {
     cursor:pointer;
+}
+#economy {
+    overflow:hidden;
+}
+#economy div.wrapper {
+    overflow:hidden;
 }
 
 /* ==========================================================================
@@ -625,7 +635,7 @@ border-top-color: #fff;
 }
 #economy .col {
     width: 450px;
-    height: 520px;
+    height: 550px;
     float: left;
 }
 #gdp, #population {
