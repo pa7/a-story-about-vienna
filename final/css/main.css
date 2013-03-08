@@ -283,8 +283,8 @@ section {
     padding:10px;
     cursor:pointer;
 }
-#tags_slide2 div:hover{
-    box-shadow:0 0 0 10px rgba(0,0,0,.2);
+#tags_slide2 div:hover, #tags_slide2 .active {
+    box-shadow:0 0 0 10px rgba(0,0,0,.4);
 }
 #spacer_slide2 {
     margin-top:100px;
@@ -714,24 +714,52 @@ border-top-color: #fff;
     font-weight: 200;
     background-color: white;
     opacity: 0.5;
-    z-index: 10001;
+    z-index: 10002;
     font-size: 1em;
     text-decoration: none;
     color: black;
+    cursor:pointer;
 }
 
 #credits {
-    width: 700px;
+    z-index: 10001;
+    width: 100%;
+    padding-top: 20px;
     height: 400px;
     position: fixed;
-    background: white;
-    border-radius: 10px;
+    bottom: 0px;
+    background:rgba(255,255,255,.7);
     box-shadow: 4px 4px 15px #afa1b1;
+    color: #222;
+    display: none;
+}
+
+#credits .description {
+    font-size: 0.9em;
+    font-weight: 200;
+}
+
+#credits a {
+    text-decoration: none;
+    color: #222;
+    display: block;
+    line-height: 14px;
+    margin: 2px;
+    padding: 2px;
+}
+#credits a:hover {
+    color: #dd4444;
 }
 
 #credits .col {
+    font-size: 0.7em;
     width: 200px;
     height: 300px;
     float: left;
     margin: 20px;
+}
+
+#credits .center {
+    width: 720px;
+    margin: auto;
 }
