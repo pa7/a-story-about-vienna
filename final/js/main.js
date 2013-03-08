@@ -62,8 +62,12 @@ $(document).ready(function(){
 	});
 
 	$("#btn_slide3").click(function(){
-		// todo update to districts/economy
 		$(window).scrollTo($('#finish'), 2000);
+	});
+	
+	$("#c").click(function(){
+	    $("#credits").fadeIn();
+		
 	});
 
 	// initialize all the visualizations
