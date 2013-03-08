@@ -649,8 +649,14 @@ border-top-color: #fff;
 .sub {
     font-style: italic;
     font-weight: 100;
-    color: #888;
+    color: #555;
     font-size: 1.2em;
+    text-shadow: 2px 2px 2px rgba(255,255,255,.5);
+}
+
+
+#economy .wrapper > div { 
+    background:rgba(255,255,255,.3);
 }
 
 
