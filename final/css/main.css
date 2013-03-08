@@ -721,7 +721,7 @@ border-top-color: #fff;
     background:rgba(255,255,255,.7);
     box-shadow: 4px 4px 15px #afa1b1;
     color: #222;
-    opacity: 0;
+    display: none;
 }
 
 #credits .description {
