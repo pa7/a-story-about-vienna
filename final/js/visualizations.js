@@ -405,21 +405,21 @@ window.onload = function () {
 ];
     
     // Draw
-    var width = 800,
+    var width = 500,
         height = 250,
         leftgutter = 30,
         bottomgutter = 20,
         topgutter = 20,
-        colorhue = .6 || Math.random(),
+        colorhue = .5 || Math.random(),
         color = "hsl(" + [colorhue, .5, .5] + ")",
         r = Raphael("gdp", width, height),
-        txt = {font: '12px Helvetica, Arial', fill: "#fff"},
+        txt = {font: '12px Helvetica, Arial', fill: "#aaa"},
         txt1 = {font: '10px Helvetica, Arial', fill: "#fff"},
         txt2 = {font: '12px Helvetica, Arial', fill: "#000"},
         X = (width - leftgutter) / labels.length,
         max = Math.max.apply(Math, data),
         Y = (height - bottomgutter - topgutter) / max;
-    r.drawGrid(leftgutter + X * .5 + .5, topgutter + .5, width - leftgutter - X, height - topgutter - bottomgutter, 10, 10, "#000");
+    r.drawGrid(leftgutter + X * .5 + .5, topgutter + .5, width - leftgutter - X, height - topgutter - bottomgutter, 10, 10, "#eee");
     var path = r.path().attr({stroke: color, "stroke-width": 4, "stroke-linejoin": "round"}),
         bgp = r.path().attr({stroke: "none", opacity: .3, fill: color}),
         label = r.set(),

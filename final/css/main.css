@@ -179,7 +179,7 @@ section {
   background-size: cover;
 }
 #intro h1 {
-    /* todo: media queries */;
+    /* todo: media queries */
     font-size:150px;
     line-height:140px;
 }
@@ -619,6 +619,13 @@ border-top-color: #fff;
 
 /* =============== POPULATION/ECONOMY ============ */
 
+#economy {
+    background:url(../img/economy-background.jpg) no-repeat center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
 #economy .col {
     width: 50%;
     float: left;
@@ -698,7 +705,9 @@ border-top-color: #fff;
     width: 700px;
     height: 400px;
     position: fixed;
-    
+    background: white;
+    border-radius: 10px;
+    box-shadow: 4px 4px 15px #afa1b1;
 }
 
 #credits .col {
