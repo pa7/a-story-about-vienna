@@ -190,7 +190,7 @@ section {
     padding-top:10%;
 
 }
-.wrapper div { 
+.wrapper > div { 
     width:800px;
     margin:auto;
     text-align:left;
@@ -225,17 +225,17 @@ section {
     text-shadow:2px 2px 0 #910202;
     
 }
-#btn_slide1:hover {
+#btn_slide1:hover, #btn_slide2:hover, #btn_slide3:hover {
     box-shadow:0 0 10px black;
     background-color:#222222;
     text-shadow:2px 2px 0 black;
     border:1px solid black;
 }
-#btn_slide1:active {
+#btn_slide1:active, #btn_slide2:active, #btn_slide3:active {
     background-color:#1d1d1d;
 }
 
-#btn_slide2 {
+#btn_slide2, #btn_slide3 {
     width:auto;
     display:table;
     position:absolute;
@@ -254,15 +254,6 @@ section {
     box-shadow:0 0 2px black;
     color:white;
     text-shadow:2px 2px 0 #910202;   
-}
-#btn_slide2:hover {
-    box-shadow:0 0 10px black;
-    background-color:#222222;
-    text-shadow:2px 2px 0 black;
-    border:1px solid black;
-}
-#btn_slide2:active {
-    background-color:#1d1d1d;
 }
 
 #cultureOverlay h2 {
@@ -629,14 +620,24 @@ border-top-color: #fff;
     background-size: cover;
 }
 #economy .col {
-    width: 50%;
+    width: 450px;
+    height: 480px;
     float: left;
 }
-#holder {
-  height: 500px;
-  float: left;
+#gdp, #population {
+    /*height: 400px;*/
 }
 
+#gdp {
+    margin-top: 50px;
+}
+
+.sub {
+    font-style: italic;
+    font-weight: 100;
+    color: #888;
+    font-size: 1.2em;
+}
 
 
 
@@ -688,6 +689,8 @@ border-top-color: #fff;
       font-size: 2.5em;
       text-shadow: 2px 2px 2px white;
     }
+
+/* ==================== CREDITS ==================== */
 
 #c {
     position: fixed;
