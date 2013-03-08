@@ -388,9 +388,9 @@
 			    colorhue = .5 || Math.random(),
 			    color = "hsl(" + [colorhue, .5, .5] + ")",
 			    r = Raphael("gdp", width, height),
-			    txt = {font: '11px Helvetica, Arial', fill: "#999"},
+			    txt = {font: '11px Helvetica, Arial', fill: "#ccc"},
 			    txt1 = {font: '10px Helvetica, Arial', fill: "#fff"},
-			    txt2 = {font: '12px Helvetica, Arial', fill: "#000"},
+			    txt2 = {font: '12px Helvetica, Arial', fill: "#444"},
 			    X = (width - leftgutter) / labels.length,
 			    max = Math.max.apply(Math, data),
 			    Y = (height - bottomgutter - topgutter) / max;
@@ -411,7 +411,7 @@
 			for (var i = 0, ii = labels.length; i < ii; i++) {
 			    var y = Math.round(height - bottomgutter - Y * data[i]),
 				x = Math.round(leftgutter + X * (i + .5)),
-				t = r.text(x, height - 6, labels[i]).attr(txt).toBack();
+				t = r.text(x, height - 6, labels[i]).attr(txt2).toBack();
 			    if (!i) {
 				p = ["M", x, y, "C", x, y];
 				bgpp = ["M", leftgutter + X * .5, height - bottomgutter, "L", x, y, "C", x, y];
