@@ -51,6 +51,8 @@
 			init = function(){
 				$('#tags_slide2 div').click(function() {
 					updateLayer("d"+$(this).index());
+					$('#tags_slide2 div').removeClass("active");
+					$(this).addClass("active");
 				});
 				// Defaults for the WMTS layers
 			    var defaults = {

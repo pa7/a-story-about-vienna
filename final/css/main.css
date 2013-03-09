@@ -691,16 +691,17 @@ border-top-color: #fff;
       float: left;
       height: 150px;
       width: 150px;
-      background: white;
+    background:rgba(255,255,255,.8);
       border-radius: 75px;
       box-shadow: 4px 4px 15px #afa1b1;
       margin: 20px;
       margin-top: 50px;
-      opacity: 0.8;
+      webkit-transition: opacity 0.3s linear; -webkit-transition: all 0.3s linear; -moz-transition: all 0.3s linear; transition: all 0.3s linear;
     }
     
     #share .circle:hover {
-      box-shadow: 4px 4px 15px #afa1b1;
+      box-shadow: 4px 4px 15px #796f80;
+    background:rgba(255,255,255,1);
       opacity: 1;
     }
     
