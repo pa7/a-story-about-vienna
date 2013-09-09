@@ -9,19 +9,25 @@
         <meta property="og:url" content="http://www.patrick-wied.at/projects/a-story-about-vienna/" />
         <meta property="og:title" content="A story about Vienna" />
         <meta property="og:image" content="http://www.patrick-wied.at/projects/a-story-about-vienna/img/economy-background.jpg" />
-        <meta property="og:description" content="Vienna has been awarded  most livable city in the world several times. This is an interactive story visualizing some of the reasons for that choice"/>
+        <meta property="og:description" content="Vienna has been voted  most livable city in the world several times. This is an interactive story visualizing some of the reasons for that choice"/>
         <title>A story about Vienna</title>
-        <meta name="description" content="Vienna has been awarded most livable city in the world several times. This is an interactive story to visualize the reasons for that choice">
+        <meta name="description" content="Vienna has been voted most livable city in the world several times. This is an interactive story to visualize the reasons for that choice">
         <meta name="robots" content="index, follow" />
         <meta name="viewport" content="width=device-width">
         <link rel="stylesheet" href="css/normalize.min.css">
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="css/openlayers.css">
-        <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+        <!-- <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script> -->
     </head>
     <body>
-        <!--[if lt IE 7]>
-            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+         <!--[if lte IE 9]>
+            <div class="noie">
+                <h3>Hey there.</h3><br />
+                This beautiful presentation is best viewed in a modern web browser such as Google Chrome or Firefox. <br />
+                In order to guarantee a nice user experience, please use one of the mentioned web browsers <br />
+                <a href="http://browsehappy.com/" target="_blank">Browse happier</a><br />
+                <strong>Thank you!</strong>
+            </div>
         <![endif]-->
 
             <section id="intro">
@@ -29,7 +35,7 @@
                 <div class="wrapper">
                     <h1><span style="font-weight:bold;">Vienna</span>,<span class="austria">Austria</span></h1>
                     <div>
-                        Vienna has been awarded <i>most livable city in the world</i> four times in a row.
+                        Vienna has been voted <i>most livable city in the world</i> four times in a row.
                     </div>
                     <div id="btn_slide1" >
                         Let's find out why :)
@@ -37,6 +43,43 @@
                 </div>
 
             </section>
+            <section id="historical">
+                <h2>Vienna is a city with great history</h2>
+                <div id="timeline">
+                   <ul id="dates">
+                      <li><a href="#">1960</a></li>
+                      <li><a href="#">1999</a></li>
+                      <li><a href="#">2010</a></li>
+                      <li><a href="#">2013</a></li>
+                   </ul>
+                   <ul id="issues">
+                      <li id="date1">
+                        <h2>1960: The blablabla</h2>
+                         <p><img src="" width="300" height="200"/>Test Event Description</p>
+                      </li>
+                      <li id="date2">
+                         <p>Lorem ipsum.</p>
+                      </li>
+                       <li id="date3">
+                         <p>Lorem ipsum.</p>
+                      </li>
+                       <li id="date4">
+                         <p>Lorem ipsum.</p>
+                      </li>
+                   </ul>
+                   <div id="grad_left"></div>
+                    <div id="grad_right"></div>
+                   <a href="#" id="next">&#8594;</a> <!-- optional -->
+                   <a href="#" id="prev">&#8592;</a> <!-- optional -->
+                </div>
+                <div id="btn_slideh">
+                    show me more
+                </div>
+            </section>
+            <!--<section>
+                <h2>We are located right in the middle of Europe</h2>
+                That makes us a communication hub in Europe
+            </section> -->
             <section id="cultural">
                 <div id="cultureOverlay">
                     <h2>There are lots of things to do in Vienna</h2>
@@ -94,7 +137,9 @@
                     </div>
 
             </section>
-            
+            <section id="startup-ecosystem">
+
+            </section>
             <section id="finish">
                 <div class="parallax-viewport" id="parallax">
                     <div class="parallax-layer" style="width: 2008px; height: 1000px; margin-top: -550px; left: 0%; margin-left: 0px;">
@@ -194,6 +239,7 @@
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
         <script src="js/vendor/jquery.scrollarama.js"></script>
         <script src="js/vendor/jquery.scrollto.js"></script>
+        <script src="js/vendor/jquery.timelinr-0.9.53.js"></script>
         <script src="http://openlayers.org/api/OpenLayers.js"></script>
         <script src="js/vendor/jquery_002.js"></script>
         <script src="js/vendor/jquery.parallax.js"></script>
@@ -201,7 +247,7 @@
         <script src="js/vendor/raphael_popup.js"></script>
         <script src="js/visualizations.js"></script>
         <script src="js/main.js"></script>
-        <script type="text/javascript">
+        <!-- <script type="text/javascript">
         var pkBaseURL = (("https:" == document.location.protocol) ? "https://www.patrick-wied.at/helper/piwik/" : "http://www.patrick-wied.at/helper/piwik/");
         document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
         </script><script type="text/javascript">
@@ -210,7 +256,7 @@
         piwikTracker.trackPageView();
         piwikTracker.enableLinkTracking();
         } catch( err ) {}
-    </script><noscript><p><img src="http://www.patrick-wied.at/helper/piwik/piwik.php?idsite=1" style="border:0" alt="" /></p></noscript>
+    </script><noscript><p><img src="http://www.patrick-wied.at/helper/piwik/piwik.php?idsite=1" style="border:0" alt="" /></p></noscript> -->
     <!-- End Piwik Tag -->
     </body>
 </html>
