@@ -50,8 +50,14 @@ $(document).ready(function(){
 
 	});
 
+
+
 	$('#btn_slide1').click(function(){
-		$(window).scrollTo($('#cultural'), 500);
+		$(window).scrollTo($('#historical'), 800);
+	});
+
+	$('#btn_slideh').click(function() {
+		$(window).scrollTo($('#cultural'), 1000);
 	});
 	$('#btn_slide2').click(function(){
 		$(window).scrollTo($('#public-transport'), 1000);
@@ -77,6 +83,8 @@ $(document).ready(function(){
 		$(this).data("close",1);
 	    }
 	});
+
+	$().timelinr();
 
 	// initialize all the visualizations
 	for(var key in viz){
