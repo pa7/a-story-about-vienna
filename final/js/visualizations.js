@@ -257,7 +257,7 @@
 						georss.addMarker(value);
 					});
 
-				 }, 1500);
+				 }, 2500);
 				
 				map.addLayer(georss);
 
